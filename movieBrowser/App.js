@@ -1,20 +1,49 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react';
+import { View, Button } from 'react-native';
+import { createStackNavigator } from '@react-navigation/stack';
+import { NavigationContainer } from '@react-navigation/native';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+class ScreenOne extends React.Component {
+    render() {
+        return(
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 25, borderColor: 'teal'}}>
+                <Button 
+                    title="Go to Screen Two"
+                    onPress={() => this.props.navigation.navigate('Screen Two')}/>
+            </View>
+        )
+    }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+class ScreenTwo extends React.Component {
+    render() {
+        return (
+            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', borderWidth: 25, borderColor: 'orange'}}>
+                <Button
+                    title="Go to Screen One"
+                    onPress={() => this.props.navigation.navigate('Screen One')}/>
+            </View>
+        )
+    }
+}
+
+const Stack = createStackNavigator();
+
+function MyStack() {
+    return(
+        <Stack.Navigator>
+            <Stack.Screen name="Screen One" component={ScreenOne}/>
+            <Stack.Screen name="Screen Two" component={ScreenTwo}/>
+        </Stack.Navigator>
+    )
+}
+
+export default class App extends React.Component {
+    render() {
+        return(
+            <NavigationContainer>
+                <MyStack />
+            </NavigationContainer>
+        )
+    }
+}
